@@ -1,23 +1,32 @@
-<div>
-  <h3><%- guild.name %></h3>
-  <p><%- guild.id %></p>
-  <% if(guild.icon.startsWith('a_')) { %>
-  <img
-    src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.gif"
-    alt="Serve discord image"
-  />
-  <% } else { %>
-  <img
-    src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.png"
-    alt="Serve discord image"
-  />
-  <% } %> <% if(guild.owner) { %>
-  <span>Owner</span>
-  <% } %>
-
-  <ul>
-    <% guild.features.forEach((feature) => { %>
-    <li><%= feature %></li>
-    <% }) %>
-  </ul>
+<div class="col-sm-6 col-md-4 col-lg-3 p-2">
+  <div class="card card-body text-light bg-dark h-100">
+    <p>ID: <%- guild.id %></p>
+    <% if(guild.icon.startsWith('a_')) { %>
+    <img
+      src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.gif"
+      alt="Serve discord image"
+    />
+    <% } else { %>
+    <img
+      src="https://cdn.discordapp.com/icons/<%=guild.id%>/<%=guild.icon%>.png"
+      alt="Serve discord image"
+    />
+    <% } %> 
+    <h3 class="pt-3 pb-2 text-nowrap overflow-hidden" style="text-overflow: ellipsis; font-size: 1.25rem;">
+      <%- guild.name %>
+    </h3>
+    <% if(guild.owner) { %>
+      <span class="btn btn-success py-2 mb-1" style="letter-spacing: 1.2px;">Owner</span>
+      <% } %>
+    <button class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="<%= '#collapse' + guild.id %>">
+      Features
+    </button>
+    <div class="collapse" id="<%= 'collapse'+guild.id %>">
+      <ul class="pt-3">
+        <% guild.features.forEach((feature) => { %>
+        <li><%= feature %></li>
+        <% }) %>
+      </ul>
+    </div>
+  </div>
 </div>
