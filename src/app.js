@@ -2,6 +2,8 @@ const express = require("express");
 const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
+const MongoStore = require("connect-mongo");
+const { MONGODB_URI, SECRET } = require("./config");
 
 require("./strategies/discordStrategy");
 const app = express();
@@ -13,9 +15,16 @@ app.set("views", path.join(__dirname, "views"));
 // Middlewares
 app.use(
   session({
-    secret: "Some secret uwu",
+    secret: SECRET,
+    name: "discord-auth-nodejs",
     saveUninitialized: false,
     resave: false,
+    store: MongoStore.create({
+      mongoUrl: MONGODB_URI,
+    }),
+    cookie: {
+      maxAge: 60000 * 60 * 24, // 1 day
+    },
   })
 );
 app.use(passport.initialize());
